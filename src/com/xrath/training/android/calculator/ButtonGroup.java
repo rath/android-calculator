@@ -19,11 +19,13 @@ public class ButtonGroup extends GridView
 	private Button[] nums = new Button[10];
 	private Map<Operator, Button> operatorButtons = new HashMap<Operator, Button>();
 	
-	private ButtonActions action = new ButtonActions();
+	private ButtonActions action;
 		
-	public ButtonGroup(Context context) 
+	public ButtonGroup(Context context, ButtonActions action) 
 	{
 		super(context);
+		
+		this.action = action;
 
 		setNumColumns(4);
     	setHorizontalSpacing(1);
@@ -45,7 +47,6 @@ public class ButtonGroup extends GridView
     		nums[i].setGravity(gravity);
     		nums[i].setTextSize(textSize);
     		nums[i].setOnClickListener(new View.OnClickListener() {				
-				@Override
 				public void onClick(View v) {
 					action.processNumber(number);
 				}
@@ -59,7 +60,6 @@ public class ButtonGroup extends GridView
     		button.setGravity(gravity);
     		button.setTextSize(textSize);
     		button.setOnClickListener(new View.OnClickListener() {
-				@Override
 				public void onClick(View v) {
 					action.processOperator(op);
 				}    			
@@ -83,22 +83,18 @@ public class ButtonGroup extends GridView
     			ops.get(Operator.DOT), nums[0], ops.get(Operator.RESULT), ops.get(Operator.PLUS)
     		};
     		
-			@Override
 			public int getCount() {
 				return nums.length + ops.size();
 			}
 
-			@Override
 			public Object getItem(int position) {			
 				return null;
 			}
 
-			@Override
 			public long getItemId(int position) {
 				return 0;
 			}
 
-			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				View view = buttons[position];
 				view.setLayoutParams(
